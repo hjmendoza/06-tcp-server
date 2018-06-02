@@ -12,11 +12,7 @@ const server = net.createServer();
 const eventEmitter = new EventEmitter();
 const socketPool = {};
 
-/**
- * User Constructor
- * @param socket
- * @constructor
- */
+
 let User = function(socket) {
   let id = uuid();
   this.id = id;
@@ -24,7 +20,6 @@ let User = function(socket) {
   this.socket = socket;
 };
 
-const connectionPool = [];
 
 /**
  * Connection listener.
@@ -36,8 +31,6 @@ server.on('connection', (socket) => {
   console.log('CONNECTION!');
   let user = new User(socket);
   socketPool[user.id] = user;
-  connectionPool.push(user.id);
-  console.log(connectionPool);
   socket.on('data', (buffer) => dispatchAction(user.id, buffer));
 });
 
@@ -100,14 +93,14 @@ eventEmitter.on('@nick', (data, userId) => {
 });
 
 eventEmitter.on('@list', (data, userId) => {
-  for(let i=0; i < connectionPool.length; i++){
+  for(let value in socketPool){
     let user = socketPool[userId];
-    user.socket.write(`${connectionPool[i]};\n`);
+    user.socket.write(`${socketPool[value].nickname}\n`);
   }
-
 });
 
 eventEmitter.on('@dm', (data, userId) => {
+
   // data.target == who it's going to
   // data.message == the message
   // find socketPool[target].socket.write(message);
