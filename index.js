@@ -43,7 +43,6 @@ server.on('connection', (socket) => {
  *    @all message
  *    @nick newname
  *    @quit
- *    @kick username
  *    @list
  *    @dm username message
  * @param buffer
@@ -85,8 +84,8 @@ let dispatchAction = (userId, buffer) => {
  */
 
 eventEmitter.on('@all', (data, userId) => {
-  for( let connection in socketPool ) {
-    let user = socketPool[connection];
+  for( let key in socketPool ) {
+    let user = socketPool[key];
     user.socket.write(`<${socketPool[userId].nickname}>: ${data.payload}\n`);
   }
 });
@@ -94,6 +93,14 @@ eventEmitter.on('@all', (data, userId) => {
 eventEmitter.on('@nick', (data, userId) => {
   let user = socketPool[userId];
   user.nickname = data.target;
+});
+
+eventEmitter.on('@list', (data, userId) => {
+  for( let key in socketPool){
+    let user = socketPool[key];
+    user.socket.write(`${socketPool[userId].nickname};\n`);
+  }
+
 });
 
 eventEmitter.on('@dm', (data, userId) => {
