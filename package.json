@@ -1,0 +1,25 @@
+{
+  "name": "06-tcp-server",
+  "version": "1.0.0",
+  "description": "![cf](https://i.imgur.com/7v5ASc8.png) Lab 06: TCP Chat Server ======",
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint **/*.js",
+    "test": "jest --verbose --coverage",
+    "test-watch": "jest --watchAll --verbose --coverage"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hjmendoza/06-tcp-server.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hjmendoza/06-tcp-server/issues"
+  },
+  "homepage": "https://github.com/hjmendoza/06-tcp-server#readme",
+  "dependencies": {
+    "eslint": "^4.19.1",
+    "jest": "^23.1.0"
+  }
+}
